@@ -11,5 +11,5 @@
           USER: ${{ secrets.USER }}
           DOWNLOAD: YES # if set to YES, it downloads the content, default value is UPLOAD
           SRC: ~/remote/web
-          DST: ~/local/web
+          DEST: ~/local/web
 ```

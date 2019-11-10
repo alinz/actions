@@ -20,7 +20,7 @@ ssh-keyscan -t rsa $HOST >> "$SSH_PATH/known_hosts"
 
 
 if [ "$DOWNLOAD" -eq "YES" ]; then
-  scp -o StrictHostKeyChecking=no $USER@$HOST:$DEST $SRC
+  scp -o StrictHostKeyChecking=no $USER@$HOST:$SRC $DEST
 else
   scp -o StrictHostKeyChecking=no $SRC $USER@$HOST:$DEST
 fi
