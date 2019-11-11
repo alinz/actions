@@ -18,7 +18,7 @@ openssl x509 -req -days 100 -in IntermediateCA.csr -CA RootCA.crt -CAkey RootCA.
 openssl rsa -in IntermediateCA.key -pubout -out IntermediateCA.pub
 ```
 
-Once the action is performs, the newly generated keys will be store in `/github/home/certs/`:
+Once the action is performed, the newly generated keys will be store in `/github/home/certs/`:
 
 ```
 /github/home/certs/$CERT_NAME.key
