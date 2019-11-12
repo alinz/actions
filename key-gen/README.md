@@ -26,6 +26,12 @@ Once the action is performed, the newly generated keys will be store in `/github
 /github/home/certs/$CERT_NAME.crt
 ```
 
+> NOTE: if ENCRYPT_KEY env is provider, key will be encrypted and can be decrypt by the following command:
+
+```
+openssl aes-256-cbc -d -in $CERT_NAME.key.enc -out $CERT_NAME.key -k $ENCRYPT_KEY
+```
+
 ## USAGE
 
 ```yml
@@ -37,7 +43,9 @@ Once the action is performed, the newly generated keys will be store in `/github
     CERT_COUNTRY_NAME: CA
     CERT_STATE_NAME: Ontario
     CERT_PROJECT_NAME: AwesomePrject
+    CERT_VALID_FOR: 30
     SUBJECT_ALT_NAME: IP:127.0.0.1,DNS:localhost
     INTERMEDIATE_KEY: ${{ secrets.INTERMEDIATE_KEY }}
     INTERMEDIATE_CA: ${{ secrets.INTERMEDIATE_CA }}
+    ENCRYPT_KEY: ${{ secret.SHARED_KEY }}
 ```
