@@ -1,4 +1,4 @@
-FROM debian:stable-slim
+FROM alpine
 
 LABEL "maintainer"="maddox <a.najafizadeh@najafizadeh.com>"
 LABEL "repository"="https://github.com/alinz/actions"
@@ -9,10 +9,10 @@ LABEL "com.github.actions.description"="Generate Key based on intermidate certif
 LABEL "com.github.actions.icon"="server"
 LABEL "com.github.actions.color"="orange"
 
-RUN apt-get update && apt-get install -y \
-  openssh-client && \
-  openssl && \
-  rm -Rf /var/lib/apt/lists/*
+RUN apk update && \
+  apk add --no-cache openssh-client && \
+  apk add --no-cache openssl && \
+  rm -rf /var/cache/apk/*
 
 
 ADD entrypoint.sh /entrypoint.sh
