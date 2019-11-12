@@ -11,6 +11,7 @@ LABEL "com.github.actions.color"="orange"
 
 RUN apt-get update && apt-get install -y \
   openssh-client && \
+  openssl && \
   rm -Rf /var/lib/apt/lists/*
 
 
