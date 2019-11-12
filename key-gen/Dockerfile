@@ -10,6 +10,7 @@ LABEL "com.github.actions.icon"="server"
 LABEL "com.github.actions.color"="orange"
 
 RUN apk update && \
+  apk add ca-certificates && \ 
   apk add --no-cache openssh-client && \
   apk add --no-cache openssl && \
   apk add --no-cache --upgrade bash && \
