@@ -12,6 +12,7 @@ LABEL "com.github.actions.color"="orange"
 RUN apk update && \
   apk add --no-cache openssh-client && \
   apk add --no-cache openssl && \
+  apk add --no-cache --upgrade bash && \
   rm -rf /var/cache/apk/*
 
 
