@@ -18,10 +18,12 @@ ssh-add "$SSH_PATH/deploy_key"
 
 ssh-keyscan -t rsa $HOST >> "$SSH_PATH/known_hosts"
 
-
-COMMANDS=$(echo "$*" | tr "\n")
+OIFS="$IFS"
+IFS='\n'
+COMMANDS=$(echo "$*" | tr "\n" "\n")
+IFS="$OIFS"
 
 for COMMAND in $COMMANDS
 do
-  echo "scp -r -o StrictHostKeyChecking=no $COMMAND"
+  scp -r -o StrictHostKeyChecking=no $COMMAND
 done
