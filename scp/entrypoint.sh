@@ -25,5 +25,6 @@ IFS="$OIFS"
 
 for COMMAND in $COMMANDS
 do
+  echo "scp -r -o StrictHostKeyChecking=no $COMMAND"
   scp -r -o StrictHostKeyChecking=no $COMMAND
 done
