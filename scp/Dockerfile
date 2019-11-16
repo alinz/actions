@@ -1,20 +1,21 @@
-FROM debian:stable-slim
+FROM alpine
 
 LABEL "maintainer"="maddox <a.najafizadeh@najafizadeh.com>"
 LABEL "repository"="https://github.com/alinz/actions"
 LABEL "version"="1.0.0"
 
 LABEL "com.github.actions.name"="SCP"
-LABEL "com.github.actions.description"="Run command via SSH"
+LABEL "com.github.actions.description"="Run multiple scp via SSH"
 LABEL "com.github.actions.icon"="server"
 LABEL "com.github.actions.color"="orange"
 
-RUN apt-get update && apt-get install -y \
-  openssh-client && \
-  rm -Rf /var/lib/apt/lists/*
-
+RUN apk update && \
+  apk add ca-certificates && \ 
+  apk add --no-cache openssh-client && \
+  apk add --no-cache openssl && \
+  apk add --no-cache --upgrade bash && \
+  rm -rf /var/cache/apk/*
 
 ADD entrypoint.sh /entrypoint.sh
-
 
 ENTRYPOINT ["/entrypoint.sh"]

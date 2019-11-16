@@ -19,8 +19,9 @@ ssh-add "$SSH_PATH/deploy_key"
 ssh-keyscan -t rsa $HOST >> "$SSH_PATH/known_hosts"
 
 
-if [ "$DOWNLOAD" -eq "YES" ]; then
-  scp -r -o StrictHostKeyChecking=no $USER@$HOST:$SRC $DEST
-else
-  scp -r -o StrictHostKeyChecking=no $SRC $USER@$HOST:$DEST
-fi
+COMMANDS=$(echo "$*" | tr "\n")
+
+for COMMAND in $COMMANDS
+do
+  scp -r -o StrictHostKeyChecking=no $COMMAND
+done
