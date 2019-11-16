@@ -23,5 +23,5 @@ COMMANDS=$(echo "$*" | tr "\n")
 
 for COMMAND in $COMMANDS
 do
-  scp -r -o StrictHostKeyChecking=no $COMMAND
+  echo "scp -r -o StrictHostKeyChecking=no $COMMAND"
 done
