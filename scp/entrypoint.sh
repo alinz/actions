@@ -18,13 +18,15 @@ ssh-add "$SSH_PATH/deploy_key"
 
 ssh-keyscan -t rsa $HOST >> "$SSH_PATH/known_hosts"
 
-OIFS="$IFS"
-IFS='\n'
-COMMANDS=$(echo "$*" | tr "\n" "\n")
-IFS="$OIFS"
+# This is trick I came up, as I can't figured out the way to split string only based on \n and not spaces
+# I replaced spaces with very unique string, then split, then replace uniqe string with space
+SPLINTER="________________"
+COMMANDS="$*"
+COMMANDS=${COMMANDS// /SPLINTER}
+COMMANDS=$(echo "$COMMANDS" | tr "\n" "\n")
 
 for COMMAND in $COMMANDS
 do
-  echo "scp -r -o StrictHostKeyChecking=no $COMMAND"
+  COMMAND=${COMMAND//SPLINTER/ }
   scp -r -o StrictHostKeyChecking=no $COMMAND
 done
