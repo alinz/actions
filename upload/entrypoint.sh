@@ -77,16 +77,19 @@ runSCP() {
 setupSSH
 
 BEFORE=$(grabEnv "before")
+echo "BEFORE: $BEFORE"
 if [ -v BEFORE ]; then 
   runSSH "$BEFORE"
 fi
 
 UPLOAD=$(grabEnv "upload")
+echo "UPLOAD: $UPLOAD"
 if [ -v UPLOAD ]; then 
   runSCP "$UPLOAD"
 fi
 
 AFTER=$(grabEnv "after")
+echo "AFTER: $AFTER"
 if [ -v AFTER ]; then 
   runSSH "$AFTER"
 fi
