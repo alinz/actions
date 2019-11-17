@@ -53,43 +53,31 @@ setupSSH() {
   ssh-keyscan -t rsa $HOST >> "$SSH_PATH/known_hosts"
 }
 
-runSSH() {
-  local VAL="$1"
-  echo "ssh -o StrictHostKeyChecking=no -A -tt -p ${PORT:-22} $USER@$HOST '$VAL'"
-}
-
-runSCP() {
-  # This is trick I came up, as I can't figured out the way to split string only based on \n and not spaces
-  # I replaced spaces with very unique string, then split, then replace uniqe string with space
-  local SPLINTER="________________"
-  local COMMANDS="$1"
-  COMMANDS=${COMMANDS// /SPLINTER}
-  COMMANDS=$(echo "$COMMANDS" | tr "\n" "\n")
-
-  for COMMAND in $COMMANDS
-  do
-    COMMAND=${COMMAND//SPLINTER/ }
-    echo "scp -r -o StrictHostKeyChecking=no $COMMAND"
-  done
-}
-
 # setup ssh here to prepare ssh environment
 setupSSH
 
 BEFORE=$(grabEnv "before")
 echo "BEFORE: $BEFORE"
 if [ -v BEFORE ]; then 
-  runSSH $BEFORE
+  ssh -o StrictHostKeyChecking=no -A -tt -p ${PORT:-22} $USER@$HOST "$BEFORE"
 fi
 
 UPLOAD=$(grabEnv "upload")
-echo "UPLOAD: $UPLOAD"
 if [ -v UPLOAD ]; then 
-  runSCP $UPLOAD
+  # This is trick I came up, as I can't figured out the way to split string only based on \n and not spaces
+  # I replaced spaces with very unique string, then split, then replace uniqe string with space
+  SPLINTER="________________"
+  COMMANDS=${UPLOAD// /SPLINTER}
+  COMMANDS=$(echo "$COMMANDS" | tr "\n" "\n")
+
+  for COMMAND in $COMMANDS
+  do
+    COMMAND=${COMMAND//SPLINTER/ }
+    scp -r -o StrictHostKeyChecking=no $COMMAND
+  done
 fi
 
 AFTER=$(grabEnv "after")
-echo "AFTER: $AFTER"
 if [ -v AFTER ]; then 
-  runSSH $AFTER
+  ssh -o StrictHostKeyChecking=no -A -tt -p ${PORT:-22} $USER@$HOST "$AFTER"
 fi
