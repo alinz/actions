@@ -77,7 +77,7 @@ if [ -v UPLOAD ]; then
     COMMAND=$(echo "$COMMAND" | awk '{$1=$1};1')
     # check if COMMAND is not empty
     if [[ $COMMAND = *[!\ ]* ]]; then
-      echo "scp -r -o StrictHostKeyChecking=no $COMMAND"
+      scp -r -o StrictHostKeyChecking=no $COMMAND
     fi
   done
 fi
