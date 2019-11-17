@@ -57,8 +57,7 @@ setupSSH() {
 setupSSH
 
 BEFORE=$(grabEnv "before")
-echo "BEFORE: $BEFORE"
-if [ -v BEFORE ]; then 
+if [[ $BEFORE = *[!\ ]* ]]; then
   ssh -o StrictHostKeyChecking=no -A -tt -p ${PORT:-22} $USER@$HOST "$BEFORE"
 fi
 
@@ -83,6 +82,6 @@ if [ -v UPLOAD ]; then
 fi
 
 AFTER=$(grabEnv "after")
-if [ -v AFTER ]; then 
+if [[ $AFTER = *[!\ ]* ]]; then
   ssh -o StrictHostKeyChecking=no -A -tt -p ${PORT:-22} $USER@$HOST "$AFTER"
 fi
