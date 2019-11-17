@@ -55,7 +55,7 @@ setupSSH() {
 
 runSSH() {
   local VAL="$1"
-  ssh -o StrictHostKeyChecking=no -A -tt -p ${PORT:-22} $USER@$HOST "$VAL"
+  echo "ssh -o StrictHostKeyChecking=no -A -tt -p ${PORT:-22} $USER@$HOST $VAL"
 }
 
 runSCP() {
