@@ -73,8 +73,8 @@ if [ -v UPLOAD ]; then
   for COMMAND in $COMMANDS
   do
     COMMAND=${COMMAND//SPLINTER/ }
-    echo "$COMMAND"
-    scp -r -o StrictHostKeyChecking=no $COMMAND
+    echo "scp -r -o StrictHostKeyChecking=no $COMMAND;"
+    # scp -r -o StrictHostKeyChecking=no $COMMAND
   done
 fi
 
