@@ -68,13 +68,17 @@ if [ -v UPLOAD ]; then
   # I replaced spaces with very unique string, then split, then replace uniqe string with space
   SPLINTER="________________"
   COMMANDS=${UPLOAD// /SPLINTER}
-  COMMANDS=$(echo "$COMMANDS" | tr "\n" "\n")
+  COMMANDS=$(echo "$COMMANDS" | tr ";" "\n")
 
   for COMMAND in $COMMANDS
   do
     COMMAND=${COMMAND//SPLINTER/ }
-    echo "scp -r -o StrictHostKeyChecking=no $COMMAND;"
-    # scp -r -o StrictHostKeyChecking=no $COMMAND
+    # trim
+    COMMAND=$(echo "$COMMAND" | awk '{$1=$1};1')
+    # check if COMMAND is not empty
+    if [[ $COMMAND = *[!\ ]* ]]; then
+      echo "scp -r -o StrictHostKeyChecking=no $COMMAND"
+    fi
   done
 fi
 
