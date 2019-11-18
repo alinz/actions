@@ -58,7 +58,8 @@ setupSSH
 
 BEFORE=$(grabEnv "before")
 if [[ $BEFORE = *[!\ ]* ]]; then
-  BEFORE=$(eval echo $BEFORE)
+  BEFORE=$(eval 'echo "$BEFORE"')
+  BEFORE=$(eval echo $BEFORE)  
   ssh -o StrictHostKeyChecking=no -A -tt -p ${PORT:-22} $USER@$HOST "$BEFORE"
 fi
 
@@ -84,6 +85,7 @@ fi
 
 AFTER=$(grabEnv "after")
 if [[ $AFTER = *[!\ ]* ]]; then
-  AFTER=$(eval echo $AFTER)
+  BEFORE=$(eval 'echo "$BEFORE"')
+  BEFORE=$(eval echo $BEFORE)  
   ssh -o StrictHostKeyChecking=no -A -tt -p ${PORT:-22} $USER@$HOST "$AFTER"
 fi
