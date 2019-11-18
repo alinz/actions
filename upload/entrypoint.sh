@@ -17,6 +17,22 @@ grab() {
   echo ${!val}
 }
 
+executeSSH() {
+  LINES=$1
+
+  OIFS=$(echo $IFS)
+  IFS=$'\n'
+
+  for LINE in $LINES
+  do
+    LINE=$(eval 'echo "$LINE"')
+    LINE=$(eval echo $LINE)
+    ssh -o StrictHostKeyChecking=no -A -tt -p ${PORT:-22} $USER@$HOST "$LINE"
+  done
+
+  IFS=$(echo $OIFS)
+}
+
 # for every argument defined in `with` section, the content can be extracted
 # using this function. for example
 #
@@ -58,9 +74,7 @@ setupSSH
 
 BEFORE=$(grabEnv "before")
 if [[ $BEFORE = *[!\ ]* ]]; then
-  BEFORE=$(eval 'echo "$BEFORE"')
-  BEFORE=$(eval echo $BEFORE)  
-  ssh -o StrictHostKeyChecking=no -A -tt -p ${PORT:-22} $USER@$HOST "$BEFORE"
+  executeSSH "$BEFORE"
 fi
 
 UPLOAD=$(grabEnv "upload")
@@ -85,7 +99,5 @@ fi
 
 AFTER=$(grabEnv "after")
 if [[ $AFTER = *[!\ ]* ]]; then
-  BEFORE=$(eval 'echo "$BEFORE"')
-  BEFORE=$(eval echo $BEFORE)  
-  ssh -o StrictHostKeyChecking=no -A -tt -p ${PORT:-22} $USER@$HOST "$AFTER"
+  executeSSH "$AFTER"
 fi
