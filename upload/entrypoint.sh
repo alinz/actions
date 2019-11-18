@@ -18,21 +18,12 @@ grab() {
 }
 
 executeSSH() {
-  LINES=$1
-
-  OIFS=$(echo $IFS)
-  IFS=$'
-'
-
-  for LINE in $LINES
-  do
+  local LINES=$1
+  while IFS= read -r LINE; do
     LINE=$(eval 'echo "$LINE"')
     LINE=$(eval echo "$LINE")
-    # ssh -o StrictHostKeyChecking=no -A -tt -p ${PORT:-22} $USER@$HOST "$LINE"
-    echo "->$LINE<-"
-  done
-
-  IFS=$(echo $OIFS)
+    echo $LINE
+  done <<< $LINES
 }
 
 # for every argument defined in `with` section, the content can be extracted
