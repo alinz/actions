@@ -26,7 +26,7 @@ executeSSH() {
   for LINE in $LINES
   do
     LINE=$(eval 'echo "$LINE"')
-    LINE=$(eval echo "$LINE")
+    # LINE=$(eval echo "$LINE")
     ssh -o StrictHostKeyChecking=no -A -tt -p ${PORT:-22} $USER@$HOST "$LINE"
   done
 
