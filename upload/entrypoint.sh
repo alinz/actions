@@ -21,7 +21,8 @@ executeSSH() {
   LINES=$1
 
   OIFS=$(echo $IFS)
-  IFS=$'\n'
+  IFS=$'
+'
 
   for LINE in $LINES
   do
