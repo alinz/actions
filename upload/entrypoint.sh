@@ -29,7 +29,7 @@ executeSSH() {
     LINE=$(eval 'echo "$LINE"')
     LINE=$(eval echo "$LINE")
     # ssh -o StrictHostKeyChecking=no -A -tt -p ${PORT:-22} $USER@$HOST "$LINE"
-    echo "$LINE"
+    echo "->$LINE<-"
   done
 
   IFS=$(echo $OIFS)
