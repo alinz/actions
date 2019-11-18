@@ -27,7 +27,8 @@ executeSSH() {
   do
     LINE=$(eval 'echo "$LINE"')
     LINE=$(eval echo "$LINE")
-    ssh -o StrictHostKeyChecking=no -A -tt -p ${PORT:-22} $USER@$HOST "$LINE"
+    # ssh -o StrictHostKeyChecking=no -A -tt -p ${PORT:-22} $USER@$HOST "$LINE"
+    echo "$LINE"
   done
 
   IFS=$(echo $OIFS)
@@ -81,20 +82,20 @@ UPLOAD=$(grabEnv "upload")
 if [ -v UPLOAD ]; then 
   # This is trick I came up, as I can't figured out the way to split string only based on \n and not spaces
   # I replaced spaces with very unique string, then split, then replace uniqe string with space
-  SPLINTER="________________"
-  COMMANDS=${UPLOAD// /SPLINTER}
-  COMMANDS=$(echo "$COMMANDS" | tr ";" "\n")
+  # SPLINTER="________________"
+  # COMMANDS=${UPLOAD// /SPLINTER}
+  # COMMANDS=$(echo "$COMMANDS" | tr ";" "\n")
 
-  for COMMAND in $COMMANDS
-  do
-    COMMAND=${COMMAND//SPLINTER/ }
-    # trim
-    COMMAND=$(echo "$COMMAND" | awk '{$1=$1};1')
-    # check if COMMAND is not empty
-    if [[ $COMMAND = *[!\ ]* ]]; then
-      scp -r -o StrictHostKeyChecking=no $COMMAND
-    fi
-  done
+  # for COMMAND in $COMMANDS
+  # do
+  #   COMMAND=${COMMAND//SPLINTER/ }
+  #   # trim
+  #   COMMAND=$(echo "$COMMAND" | awk '{$1=$1};1')
+  #   # check if COMMAND is not empty
+  #   if [[ $COMMAND = *[!\ ]* ]]; then
+  #     scp -r -o StrictHostKeyChecking=no $COMMAND
+  #   fi
+  # done
 fi
 
 AFTER=$(grabEnv "after")
